@@ -49,7 +49,7 @@ struct feedback_customer_seller
 
 struct pesan{
     char nama[30], jasa[20], harga[20],metode[20],nomor_telepon[20],email[20];
-    int count;
+    int jumlah;
 }pesan;  
 
 
@@ -76,8 +76,11 @@ void laporan_seller();
 void laporan();
 void lihat_laporan_customer();
 void lihat_laporan_seller();
+void history();
 void kode();
 void ganti_password();
+
+
 
 int main()
 {
@@ -459,13 +462,13 @@ void registrasi_customer()
 
     akun = fopen("akun_customer.dat", "ab");
 
-    printf("Masukkan Username\t: ");
+    printf("Masukkan Username : ");
     gets(baru.username);
-    printf("Masukkan Password\t: ");
+    printf("Masukkan Password : ");
     gets(baru.password);
-    printf("Masukkan Email\t: ");
+    printf("Masukkan Email: ");
     gets(baru.email);
-    printf("Masukkan Nomor Telepon\t: ");
+    printf("Masukkan Nomo Telepon: ");
     gets(baru.nomor_telepon);
     strcpy(data.status, "Tidak dipesan");
     data.saldo = 0;
@@ -488,13 +491,13 @@ void registrasi_seller()
 
     akun = fopen("akun_seller.dat", "ab");
 
-    printf("Masukkan Username\t: ");
+    printf("Masukkan Username : ");
     gets(new_seller.username);
-    printf("Masukkan Password\t: ");
+    printf("Masukkan Password : ");
     gets(new_seller.password);
-    printf("Masukkan Email\t: ");
+    printf("Masukkan Email : ");
     gets(new_seller.email);
-    printf("Masukkan Nomor Telepon\t: ");
+    printf("Masukkan Nomor Telepon : ");
     gets(new_seller.nomor_telepon);
 
     fwrite(&new_seller, sizeof(new_seller), 1, akun);
@@ -832,12 +835,13 @@ void marketplace()
         }
     }
 
-    data_pesanan = fopen("data Pesanan.dat", "wb");
+    data_pesanan = fopen("data pesanan.dat", "wb");
     
     printf("Nama Pemesan\t: "); 
     gets(pesan.nama);
     printf("Jumlah Pesanan\t: "); 
-    gets(pesan.jasa);
+    scanf("%d",&pesan.jumlah);
+    getchar();
     printf("Nomor telepon\t: ");
     gets(pesan.nomor_telepon);
     printf("Email\t: ");
@@ -845,6 +849,9 @@ void marketplace()
 
     fwrite(&pesan,sizeof(pesan),1,data_pesanan);
     fclose(data_pesanan);
+
+    harga = seller_data.harga * pesan.jumlah;
+    printf("Total Harga : %d \n",&harga);
 
     printf("=============================================\n");
     printf("Pilih metode pembayaran \n");
@@ -1146,10 +1153,10 @@ void history()
     printf("========================= History =========================\n");
     for (i = 0; i < count; i++)
     {
-        printf("Username\t: %s\n", sorting[i].username);
-        printf("Frekuensi\t: %d\n", sorting[i].frekuensi);
-        printf("Pengeluaran\t: %d\n", sorting[i].pengeluaran);
-        printf("Status\t: %s\n", sorting[i].status);
+        printf("Username: %s\n", sorting[i].username);
+        printf("Frekuensi: %d\n", sorting[i].frekuensi);
+        printf("Pengeluaran: %d\n", sorting[i].pengeluaran);
+        printf("Status: %s\n", sorting[i].status);
         printf("============================================================\n");
     }
     system("pause");
